@@ -8,7 +8,7 @@ env_path = pathlib.Path(__file__).parent.parent / ".env"
 print("Looking for .env at:", env_path)
 load_dotenv(dotenv_path=env_path)
 
-DATABASE_URL = os.getenv("USER_DATABASE_URL")
+DATABASE_URL = os.getenv("BOOK_DATABASE_URL")
 print("DATABASE_URL =", DATABASE_URL)   
 
 engine = create_engine(DATABASE_URL, echo=True) 

@@ -1,5 +1,4 @@
 from sqlalchemy import Boolean, Column, Integer, String, DateTime, func
-from sqlalchemy.orm import relationship
 from app.database import Base
 
 class User(Base):
