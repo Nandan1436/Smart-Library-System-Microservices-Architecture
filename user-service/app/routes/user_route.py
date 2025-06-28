@@ -11,13 +11,13 @@ def get_user_service(db: Session = Depends(get_db)) -> UserService:
     return UserService(db)
 
 @router.post("/", response_model=UserCreateResponse, status_code=201)
-def create_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
-    return user_service.create_user(user)
+async def create_user(user: UserCreate, user_service: UserService = Depends(get_user_service)):
+    return await user_service.create_user(user)
 
 @router.get("/{id}", response_model=UserResponse)
-def get_user(id: int, user_service: UserService = Depends(get_user_service)):
-    return user_service.get_user(id)
+async def get_user(id: int, user_service: UserService = Depends(get_user_service)):
+    return await user_service.get_user(id)
 
 @router.put("/{id}", response_model=UserResponse)
-def update_user(id: int, user: UserUpdate, user_service: UserService = Depends(get_user_service)):
-    return user_service.update_user(id, user)
+async def update_user(id: int, user: UserUpdate, user_service: UserService = Depends(get_user_service)):
+    return await user_service.update_user(id, user)
