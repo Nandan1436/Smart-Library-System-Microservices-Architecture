@@ -6,8 +6,8 @@ class Loan(Base):
     __tablename__ = 'loans'
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
-    book_id = Column(Integer, ForeignKey("books.id"), nullable=False, index=True)
+    user_id = Column(Integer, nullable=False, index=True)
+    book_id = Column(Integer, nullable=False, index=True)
     issue_date = Column(DateTime, server_default=func.now(), nullable=False)
     due_date = Column(DateTime, nullable=False)
     return_date = Column(DateTime)

@@ -9,8 +9,8 @@ import os
 class LoanService:
     def __init__(self, db: Session):
         self.db = db
-        self.user_service_url = os.getenv("USER_SERVICE_URL", "http://localhost:8081")
-        self.book_service_url = os.getenv("BOOK_SERVICE_URL", "http://localhost:8083")
+        self.user_service_url = os.getenv("USER_SERVICE_URL", "http://localhost:8000")
+        self.book_service_url = os.getenv("BOOK_SERVICE_URL", "http://localhost:8001")
 
     def issue_book(self, loan: LoanCreate) -> LoanResponse:
         try:
@@ -108,6 +108,7 @@ class LoanService:
             if user_response.status_code == 404:
                 raise HTTPException(status_code=404, detail="User not found")
             user_response.raise_for_status()
+            user_data = user_response.json()
         except requests.RequestException:
             raise HTTPException(status_code=503, detail="User Service unavailable")
 
@@ -125,7 +126,7 @@ class LoanService:
             loan_details.append(
                 LoanDetailResponse(
                     id=loan.id,
-                    user=UserInLoan(id=user_id, name="", email=""),
+                    user=UserInLoan(**user_data),
                     book=BookInLoan(**book_data),
                     issue_date=loan.issue_date,
                     due_date=loan.due_date,
@@ -134,4 +135,4 @@ class LoanService:
                 )
             )
 
-        return LoanHistoryResponse(loans=loan_details, total=len(loan_details))
+        return LoanHistoryResponse(loan=loan_details, total=len(loan_details))

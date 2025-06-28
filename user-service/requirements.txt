@@ -2,7 +2,6 @@ fastapi
 uvicorn
 sqlalchemy
 pydantic
-pydantic[email]
 python-dotenv
 pymysql
 requests

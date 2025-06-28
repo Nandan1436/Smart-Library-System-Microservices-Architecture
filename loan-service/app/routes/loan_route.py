@@ -11,7 +11,7 @@ def get_loan_service(db: Session = Depends(get_db)) -> LoanService:
 
 @router.post("/", response_model=LoanResponse, status_code=201)
 def create_loan(loan: LoanCreate, loan_service: LoanService = Depends(get_loan_service)):
-    return loan_service.create_loan(loan)
+    return loan_service.issue_book(loan)
 
 @router.post("/returns", response_model=LoanResponse)
 def return_book(loan_return: LoanReturn, loan_service: LoanService = Depends(get_loan_service)):
